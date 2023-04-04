@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     private float desiredMoveSpeed;
     private float lastDesiredMoveSpeed;
 
+    public float wallrunSpeed;
+
     public float speedIncreaseMultiplier;
     public float slopeIncreaseMultiplier;
 
@@ -59,12 +61,14 @@ public class PlayerMovement : MonoBehaviour
     {
       walking,
       sprinting,
+      wallrunning,
       crouching,
       sliding,
       air
     }
 
     public bool sliding;
+    public bool wallrunning;
 
     private void Start()
     {
@@ -128,6 +132,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void StateHandler()
     {
+      // Mode - Wallrunning
+      if(wallrunning)
+      {
+        state = MovementState.wallrunning;
+        desiredMoveSpeed = wallrunSpeed;
+      }
+
       // Mode - Sliding
       if(sliding)
       {
